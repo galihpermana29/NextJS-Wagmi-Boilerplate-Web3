@@ -1,7 +1,5 @@
-import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
-import { Button } from "components/Button/Button"
-import { LP_GRID_ITEMS } from "../lp-items"
+import Navbar from "components/navbar"
 
 export default function Web() {
   return (
@@ -15,43 +13,22 @@ export default function Web() {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <title>Next.js Enterprise Boilerplate</title>
+        <title>Next.js Web3 Boilerplate</title>
       </Head>
+      <Navbar />
       <section className="bg-white dark:bg-gray-900">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              Next.js Enterprise Boilerplate
+              Next.js Web3 Boilerplate
             </h1>
             <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-              Jumpstart your enterprise project with our feature-packed, high-performance Next.js boilerplate!
-              Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
-              enjoyable development process.
+              Elevate your enterprise project with our cutting-edge Next.js boilerplate powered by the latest
+              technologies - Web3.js, Wagmi, and Ant Design! Our boilerplate is tailored to provide a high-performance
+              development environment, complemented by AI-powered code reviews and an extensive suite of tools, ensuring
+              a streamlined and delightful development process. Dive into the future of tech with our innovative
+              solution!
             </p>
-            <Button href="https://github.com/Blazity/next-enterprise" className="mr-3">
-              Get started
-            </Button>
-            <Button
-              href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise"
-              intent="secondary"
-            >
-              Deploy Now
-            </Button>
-          </div>
-        </div>
-      </section>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-          <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
-            {LP_GRID_ITEMS.map((singleItem) => (
-              <div key={singleItem.title} className="flex flex-col items-center justify-center text-center">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 p-1.5 text-blue-700 dark:bg-primary-900 lg:h-12 lg:w-12">
-                  {singleItem.icon}
-                </div>
-                <h3 className="mb-2 text-xl font-bold dark:text-white">{singleItem.title}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -59,17 +36,17 @@ export default function Web() {
   )
 }
 
-export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
-  if (req.headers?.host?.includes("next-enterprise.vercel.app")) {
-    return {
-      redirect: {
-        destination: "https://blazity.com/open-source/nextjs-enterprise-boilerplate",
-        permanent: true,
-      },
-    }
-  }
+// export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
+//   if (req.headers?.host?.includes("next-enterprise.vercel.app")) {
+//     return {
+//       redirect: {
+//         destination: "https://blazity.com/open-source/nextjs-enterprise-boilerplate",
+//         permanent: true,
+//       },
+//     }
+//   }
 
-  return {
-    props: {},
-  }
-}
+//   return {
+//     props: {},
+//   }
+// }
