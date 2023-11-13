@@ -1,15 +1,22 @@
 import { Button } from "antd"
-import { useWalletContext } from "context/wallet-context"
+import { Connector } from "wagmi"
+import { InitialContextStateI } from "utils/interface_type"
 
-export default function Navbar() {
-  const { connect, connectors, disconnect, isConnected, address } = useWalletContext()
+interface NavbarI {
+  config: InitialContextStateI
+  onDetail: () => void
+}
+
+export default function Navbar({ config, onDetail }: NavbarI) {
+  const { connect, connectors, disconnect, isConnected } = config
 
   return (
     <div className="flex justify-between p-[20px]">
-      <div>Next Web3</div>
-      <div>
+      <div>Next Web3 Boilerplate</div>
+
+      <div className="flex gap-[10px]">
         {!isConnected &&
-          connectors!.map((connector, idx) => (
+          connectors!.map((connector: Connector, idx: number) => (
             <Button
               key={idx}
               onClick={isConnected ? () => ({}) : () => connect!({ connector })}
@@ -27,6 +34,12 @@ export default function Navbar() {
             className="border-blue-500  bg-white text-blue-500 hover:border-[1px] hover:bg-white"
           >
             <h1 suppressHydrationWarning>DISCONNECT</h1>
+          </Button>
+        )}
+
+        {isConnected && (
+          <Button onClick={onDetail} size="large" className="bg-blue-500 text-white hover:text-white">
+            <h1 suppressHydrationWarning>DETAIL</h1>
           </Button>
         )}
       </div>

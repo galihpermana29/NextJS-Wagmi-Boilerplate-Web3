@@ -17,12 +17,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains([mainnet, goerli, bscTestnet], [publicProvider()])
 
   const config = createConfig({
-    autoConnect: false,
+    autoConnect: true, // this mean that everytime the page has reloaded, the state of the wallet connect status is keep remains
     connectors: [
+      /**
+       * Array of wallet connector, in this example im using metamask
+       * See this documentation
+       * read: https://wagmi.sh/react/connectors/injected
+       */
       new MetaMaskConnector({
         chains,
         options: {
-          shimDisconnect: true,
+          /**
+           * Read: https://wagmi.sh/react/connectors/metaMask
+           */
+          shimDisconnect: true, // this mean that everytime the connect button clicked, it will pop up to re-select the wallet account
           UNSTABLE_shimOnConnectSelectAccount: true,
         },
       }),

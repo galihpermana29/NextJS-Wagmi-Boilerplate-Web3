@@ -1,22 +1,51 @@
 import Head from "next/head"
+import { useState } from "react"
+import { useBalance, useEnsName, useNetwork } from "wagmi"
+import { DetailAcountModal } from "components/modal/detail-account"
 import Navbar from "components/navbar"
+import { useWalletContext } from "context/wallet-context"
 
 export default function Web() {
+  /**
+   * By the time, we can only just called the useWalletContext
+   * in components that we want to use the value for
+   */
+  const { connect, connectors, disconnect, isConnected, address } = useWalletContext()
+
+  /**
+   * Read: https://wagmi.sh/react/hooks/useNetwork
+   * Read: https://wagmi.sh/react/hooks/useEnsName
+   */
+  const { data: name } = useEnsName({
+    address,
+  })
+  const { chain } = useNetwork()
+  const { data: accountBalance } = useBalance({
+    address,
+  })
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
   return (
-    <>
+    <div>
       <Head>
-        <meta property="og:url" content="https://next-enterprise.vercel.app/" />
-        <meta
-          property="og:image"
-          content="https://raw.githubusercontent.com/Blazity/next-enterprise/main/project-logo.png"
-        />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
         <title>Next.js Web3 Boilerplate</title>
       </Head>
-      <Navbar />
+
       <section className="bg-white dark:bg-gray-900">
+        <Navbar
+          config={{ connect, connectors, disconnect, isConnected, address }}
+          onDetail={() => setIsModalOpen(true)}
+        />
+        <DetailAcountModal
+          isModalOpen={isModalOpen}
+          handleOk={() => setIsModalOpen(false)}
+          handleCancel={() => setIsModalOpen(false)}
+          data={{ address, name, chain, accountBalance }}
+        />
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
@@ -32,21 +61,6 @@ export default function Web() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
-
-// export async function getServerSideProps({ req, res }: GetServerSidePropsContext) {
-//   if (req.headers?.host?.includes("next-enterprise.vercel.app")) {
-//     return {
-//       redirect: {
-//         destination: "https://blazity.com/open-source/nextjs-enterprise-boilerplate",
-//         permanent: true,
-//       },
-//     }
-//   }
-
-//   return {
-//     props: {},
-//   }
-// }

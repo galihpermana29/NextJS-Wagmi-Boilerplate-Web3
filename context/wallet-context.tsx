@@ -24,7 +24,7 @@ export const WalletContextProvider = ({ children, config }: WalletContextI) => {
       const { account: connectedAccount } = data
 
       /**
-       * You can do anything after success fully connect with the provider wallet
+       * You can do anything after successfully connect with the provider wallet
        */
 
       /**
@@ -38,6 +38,16 @@ export const WalletContextProvider = ({ children, config }: WalletContextI) => {
     },
   })
 
+  /**
+   * Value explanation
+   * connect: function to connect with current exist provider in this case is the wallet provider
+   * connectors: array that contain list of your wallet provider this value will passed into the connect function
+   * isLoading: wallet connect process loading state
+   * pendingConnector?: pending connector
+   * isConnected?: connected status of the wallet state
+   * activeConnector?: active connector
+   * address?: `wallet address that successfully connected with the website
+   */
   const [contextValue, setContextValue] = useState<InitialContextStateI>({
     activeConnector,
     connectors,
