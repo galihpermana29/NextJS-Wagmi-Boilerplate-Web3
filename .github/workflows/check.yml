@@ -22,6 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm install --frozen-lockfile
       - name: Lint check
-        run: npm lint
+        run: npm run lint
       - name: Format check
-        run: npm prettier
+        run: npm run prettier
