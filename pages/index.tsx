@@ -1,8 +1,8 @@
 import Head from "next/head"
 import { useState } from "react"
-import { useBalance, useEnsName, useNetwork } from "wagmi"
 import { DetailAcountModal } from "components/modal/detail-account"
 import Navbar from "components/navbar"
+import InteractWrite from "components/sections/interact-write"
 import { useWalletContext } from "context/wallet-context"
 
 export default function Web() {
@@ -10,20 +10,8 @@ export default function Web() {
    * By the time, we can only just called the useWalletContext
    * in components that we want to use the value for
    */
-  const { connect, connectors, disconnect, isConnected, address } = useWalletContext()
-
-  /**
-   * Read: https://wagmi.sh/react/hooks/useNetwork
-   * Read: https://wagmi.sh/react/hooks/useEnsName
-   */
-  const { data: name } = useEnsName({
-    address,
-  })
-  const { chain } = useNetwork()
-  const { data: accountBalance } = useBalance({
-    address,
-  })
-
+  const { connect, connectors, disconnect, isConnected, address, name, chain, accountBalance, chains, switchNetwork } =
+    useWalletContext()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   return (
@@ -37,7 +25,7 @@ export default function Web() {
 
       <section className="bg-white dark:bg-gray-900">
         <Navbar
-          config={{ connect, connectors, disconnect, isConnected, address }}
+          config={{ connect, connectors, disconnect, isConnected, address, chains, switchNetwork, chain }}
           onDetail={() => setIsModalOpen(true)}
         />
         <DetailAcountModal
@@ -59,6 +47,7 @@ export default function Web() {
               solution!
             </p>
           </div>
+          <InteractWrite />
         </div>
       </section>
     </div>

@@ -1,4 +1,6 @@
 import * as _tanstack_react_query from "@tanstack/react-query"
+import { FetchBalanceResult } from "@wagmi/core"
+import * as _wagmi_core from "@wagmi/core"
 import { Chain, Connector } from "wagmi"
 import EventEmitter from "events"
 
@@ -23,6 +25,11 @@ export interface InitialContextStateI {
   activeConnector?: Connector<any, any> | ActiveConnectorType
   address?: `0x${string}`
   disconnect?: _tanstack_react_query.UseMutateFunction<void, Error, void, unknown>
+  name?: string | undefined | null
+  chain?: (Chain & { unsupported?: boolean }) | undefined
+  accountBalance?: FetchBalanceResult | undefined
+  chains?: _wagmi_core.Chain[]
+  switchNetwork?: ((chainId_?: number | undefined) => void) | undefined
 }
 
 export interface WalletContextI {

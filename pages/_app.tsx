@@ -1,8 +1,9 @@
 import { AppProps } from "next/app"
 
 import { configureChains, createConfig, WagmiConfig } from "wagmi"
-import { bscTestnet, goerli, mainnet } from "wagmi/chains"
+import { bscTestnet, goerli, polygon } from "wagmi/chains"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect"
 
 import { publicProvider } from "wagmi/providers/public"
 import "../styles/tailwind.css"
@@ -14,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
    * read: https://wagmi.sh/react/providers/configuring-chains
    */
 
-  const { chains, publicClient } = configureChains([mainnet, goerli, bscTestnet], [publicProvider()])
+  const { chains, publicClient } = configureChains([polygon, goerli, bscTestnet], [publicProvider()])
 
   const config = createConfig({
     autoConnect: true, // this mean that everytime the page has reloaded, the state of the wallet connect status is keep remains
@@ -34,9 +35,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           UNSTABLE_shimOnConnectSelectAccount: true,
         },
       }),
+      new WalletConnectConnector({
+        options: {
+          projectId: "b19747725453e1a0c338eb997a5b52cb",
+        },
+      }),
     ],
     publicClient,
   })
+
   return (
     <WagmiConfig config={config}>
       <WalletContextProvider config={config}>

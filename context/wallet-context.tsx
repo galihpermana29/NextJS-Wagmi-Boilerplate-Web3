@@ -1,7 +1,16 @@
 import * as _tanstack_react_query from "@tanstack/react-query"
 import * as _wagmi_core from "@wagmi/core"
 import { createContext, useContext, useEffect, useState } from "react"
-import { ConnectorData, useAccount, useConnect, useDisconnect } from "wagmi"
+import {
+  ConnectorData,
+  useAccount,
+  useBalance,
+  useConnect,
+  useDisconnect,
+  useEnsName,
+  useNetwork,
+  useSwitchNetwork,
+} from "wagmi"
 
 import { CheckConnectedWalletAddress } from "utils/function"
 import { InitialContextStateI, WalletContextI } from "utils/interface_type"
@@ -12,12 +21,14 @@ const WalletContext = createContext(INITIAL_STATE)
 
 export const useWalletContext = () => useContext(WalletContext)
 
-const walletWhitelists = ["0xF97C7A13439DA91254B2D499685D52CC3E64E4EF"]
+// example of an wallet address "0xF97C7A13439DA91254B2D499685D52CC3E64E4EF"
+const walletWhitelists: string[] = []
 
 export const WalletContextProvider = ({ children, config }: WalletContextI) => {
   const { connectors } = config
 
   const { disconnect } = useDisconnect()
+
   const { connector: activeConnector, isConnected, address } = useAccount()
   const { connect, isLoading, pendingConnector } = useConnect({
     onSuccess(data) {
@@ -38,6 +49,18 @@ export const WalletContextProvider = ({ children, config }: WalletContextI) => {
     },
   })
 
+  /**
+   * Read: https://wagmi.sh/react/hooks/useNetwork
+   * Read: https://wagmi.sh/react/hooks/useEnsName
+   */
+  const { data: name } = useEnsName({
+    address,
+  })
+  const { chain } = useNetwork()
+  const { data: accountBalance } = useBalance({
+    address,
+  })
+  const { chains, switchNetwork } = useSwitchNetwork()
   /**
    * Value explanation
    * connect: function to connect with current exist provider in this case is the wallet provider
@@ -73,8 +96,18 @@ export const WalletContextProvider = ({ children, config }: WalletContextI) => {
   }, [activeConnector, disconnect])
 
   useEffect(() => {
-    setContextValue((contextValue) => ({ ...contextValue, address, isLoading, isConnected }))
-  }, [address, isConnected, isLoading])
+    setContextValue((contextValue) => ({
+      ...contextValue,
+      address,
+      isLoading,
+      isConnected,
+      name,
+      chain,
+      accountBalance,
+      chains,
+      switchNetwork,
+    }))
+  }, [address, isConnected, isLoading, chain, accountBalance, switchNetwork, name])
 
   return <WalletContext.Provider value={contextValue}>{children}</WalletContext.Provider>
 }
