@@ -6,7 +6,7 @@ Elevate your enterprise project with our cutting-edge Next.js boilerplate powere
 
 ## Demo
 
-[![Demo](https://res.cloudinary.com/braiwjaya-university/video/upload/v1700437971/hrtpqwoh689jwzungevv.mov)]
+! (https://res.cloudinary.com/braiwjaya-university/video/upload/v1700437971/hrtpqwoh689jwzungevv.mov)
 
 ## Features
 
