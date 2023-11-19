@@ -21,7 +21,7 @@ export default function Navbar({ config, onDetail }: NavbarI) {
 
   return (
     <div className="flex justify-between p-[20px]">
-      <div>Next Web3 Boilerplate</div>
+      <div className="font-bold">Cheers</div>
       <div>
         <WalletSwitcherModal config={{ connectModal, connectors, connect, setConnectModal }} />
       </div>
