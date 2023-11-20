@@ -6,7 +6,10 @@ Elevate your enterprise project with our cutting-edge Next.js boilerplate powere
 
 ## Demo
 
-! (https://res.cloudinary.com/braiwjaya-university/video/upload/v1700437971/hrtpqwoh689jwzungevv.mov)
+
+https://github.com/galihpermana29/NextJS-Wagmi-Boilerplate-Web3/assets/54941568/601f625c-caf5-43d3-a7e2-52ca4db4a413
+
+
 
 ## Features
 
